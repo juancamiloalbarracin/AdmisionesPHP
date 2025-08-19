@@ -1,0 +1,4 @@
+2025-08-18T01:22:58-05:00 BUFFER_SNIPPET: ﻿
+HEADERS: {"Origin":"http:\/\/localhost:3000","Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJVREMtQWRtaXNpb25lcy1TeXN0ZW0iLCJhdWQiOiJVREMtU3R1ZGVudHMtUG9ydGFsIiwiaWF0IjoxNzU1NDk4MTY0LCJleHAiOjE3NTU1ODQ1NjQsInVzZXJfaWQiOjYsImVtYWlsIjoiY25hdmFycm9pQHVuaWNhcnRhZ2VuYS5lZHUuY28iLCJ1c2VyX3R5cGUiOiJzdHVkZW50Iiwibm9tYnJlcyI6IkNlc2FyIEx1aXMiLCJhcGVsbGlkb3MiOiJOYXZhcnJvIEliYW5leiJ9.ieWxEJ","User-Agent":"Mozilla\/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell\/5.1.22621.5697","Host":"localhost:8000","Connection":"Keep-Alive"}
+RESPONSE_INTENDED: {"success":false,"error":"UNAUTHORIZED","message":"Usuario no autenticado","code":401}
+---

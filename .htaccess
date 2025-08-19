@@ -1,0 +1,105 @@
+﻿# =========================================================================
+# CONFIGURACIÓN APACHE - SISTEMA ADMISIONES UDC
+# =========================================================================
+# Este archivo configura Apache para el correcto funcionamiento
+# del sistema PHP con URLs limpias y manejo de CORS
+
+# Habilitar rewrite engine para URLs amigables
+RewriteEngine On
+
+# Configuración de CORS para permitir peticiones desde React
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+Header always set Access-Control-Max-Age "86400"
+
+# Responder a peticiones OPTIONS (preflight de CORS)
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=204,L]
+
+# Redireccionar peticiones API específicas
+RewriteCond %{REQUEST_URI} ^/api/auth/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api/auth/(.*)$ api/auth.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} ^/api/users/
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteRule ^api/users/(.*)$ api/users.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} ^/api/info-personal/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api/info-personal/(.*)$ api/info-personal.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} ^/api/info-academica/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api/info-academica/(.*)$ api/info-academica.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} ^/api/solicitudes/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api/solicitudes/(.*)$ api/solicitudes.php [QSA,L]
+
+# Prevenir acceso directo a archivos de configuración sensibles
+<Files ".env">
+    Require all denied
+</Files>
+
+<Files "composer.json">
+    Require all denied
+</Files>
+
+<Files "composer.lock">
+    Require all denied
+</Files>
+
+# Prevenir acceso al directorio vendor
+<Directory "vendor">
+    Require all denied
+</Directory>
+
+# Prevenir acceso al directorio de configuración
+<Directory "config">
+    Require all denied
+</Directory>
+
+# Configuración de seguridad adicional
+<IfModule mod_headers.c>
+    # Prevenir ataques XSS
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Content Security Policy básico
+    Header always set Content-Security-Policy "default-src 'self'"
+    
+    # Remover header de versión de servidor
+    Header unset Server
+    Header always unset X-Powered-By
+</IfModule>
+
+# Configuración de compresión GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Configuración de caché para archivos estáticos
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/json "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Configuración de límites de subida
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 300
+php_value memory_limit 256M
+
+# Ocultar información de PHP
+php_flag expose_php Off
+
+# Configuración de errores (solo en desarrollo)
+<IfDefine DEVELOPMENT>
+    php_flag display_errors On
+    php_flag display_startup_errors On
+</IfDefine>

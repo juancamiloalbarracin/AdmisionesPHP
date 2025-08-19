@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login API</title>
+</head>
+<body>
+    <h1>Test de API Login</h1>
+    <div id="result"></div>
+
+    <script>
+        // Test 1: Endpoint directo
+        console.log("🔍 Testing direct endpoint...");
+        fetch('http://localhost:8000/test_login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: 'test@test.com',
+                password: 'test123'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('✅ Direct endpoint response:', data);
+            document.getElementById('result').innerHTML += '<h3>Direct Endpoint Test:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        })
+        .catch(error => {
+            console.error('❌ Direct endpoint error:', error);
+            document.getElementById('result').innerHTML += '<h3>Direct Endpoint Error:</h3><pre>' + error.toString() + '</pre>';
+        });
+
+        // Test 2: API Router (actual endpoint)
+        console.log("🔍 Testing API router...");
+        fetch('http://localhost:8000/api/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: 'admin@uniminuto.edu.co',
+                password: 'admin123'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('✅ API router response:', data);
+            document.getElementById('result').innerHTML += '<h3>API Router Test:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        })
+        .catch(error => {
+            console.error('❌ API router error:', error);
+            document.getElementById('result').innerHTML += '<h3>API Router Error:</h3><pre>' + error.toString() + '</pre>';
+        });
+
+        // Test 3: Original URL from login.php
+        console.log("🔍 Testing original URL...");
+        fetch('http://localhost:8000/api/index.php?endpoint=login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: 'admin@uniminuto.edu.co',
+                password: 'admin123'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('✅ Original URL response:', data);
+            document.getElementById('result').innerHTML += '<h3>Original URL Test:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        })
+        .catch(error => {
+            console.error('❌ Original URL error:', error);
+            document.getElementById('result').innerHTML += '<h3>Original URL Error:</h3><pre>' + error.toString() + '</pre>';
+        });
+    </script>
+</body>
+</html>

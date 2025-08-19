@@ -1,0 +1,199 @@
+INSTRUCCIONES_DE_INSTALACION Y USO — SISTEMA DE ADMISIONES (PHP)
+
+1. Propósito del programa
+-------------------------
+Este repositorio contiene la implementación en PHP de un sistema de gestión del proceso de admisiones universitarias. Proporciona:
+- APIs REST para autenticación (JWT), registro y gestión de usuarios.
+- Endpoints para captura y gestión de información personal y académica de aspirantes.
+- Un flujo de solicitudes (creación, consulta y gestión de solicitudes académicas).
+- Utilidades para administración (scripts de creación de tablas, usuarios de prueba y debugging).
+
+El software está diseñado para ser consumido por un frontend (por ejemplo React) y para integrarse con procesos de back-office.
+
+2. Qué hace (visión funcional)
+------------------------------
+- Autenticación con JSON Web Tokens (emisión, validación y blacklist para logout).
+- Registro y login de usuarios (API REST).
+- Gestión de perfiles: almacenar/editar información personal e información académica.
+- Endpoints protegidos por middleware que verifica tokens y roles.
+- Scripts auxiliares para pruebas, creación de tablas y usuarios de prueba.
+- Registro de logs y manejo básico de errores para facilitar diagnóstico.
+
+3. Entornos en los que se desarrolló
+------------------------------------
+Se desarrolló con orientación a entornos Windows (se incluyen scripts y archivos de lote) y también compatible con entornos Linux/macOS donde estén disponibles PHP y MySQL/MariaDB. La guía de instalación a continuación está enfocada a un equipo Windows "limpio". Para servidores de producción se recomienda usar Linux, un servidor web (Apache o Nginx) y PHP-FPM.
+
+4. Versiones recomendadas y dependencias principales
+---------------------------------------------------
+Se recomienda usar las versiones siguientes (compatibles y probadas):
+- PHP: 8.0 ó 8.1 (se recomienda 8.1 si es posible).
+- Extensiones PHP obligatorias: pdo, pdo_mysql, mbstring, openssl, json, curl, fileinfo, zip.
+- Base de datos: MySQL 5.7+ o MariaDB 10.3+ (cualquier fork compatible con PDO MySQL).
+- Composer: gestor de dependencias PHP (última versión estable).
+- Git: para clonar el repositorio (opcional si ya tiene archivo local).
+- Opcional (Windows): XAMPP/WAMP si prefiere un paquete que incluya Apache+PHP+MySQL.
+
+Dependencias PHP (gestor Composer)
+- El proyecto utiliza librerías instalables con Composer, incluyendo (entre otras): firebase/php-jwt (JWT handling), vlucas/phpdotenv (variables de entorno) y componentes para pruebas (phpunit). El listado exacto aparece en `composer.json`.
+
+5. Tipo de base de datos y esquema
+----------------------------------
+- Motor: MySQL / MariaDB (InnoDB recomendado para soporte de transacciones y claves foráneas).
+- Esquema: las migraciones y scripts para creación de tablas se encuentran en el directorio `migrations/` y hay scripts de ayuda como `create-token-blacklist.php` y `create_test_user.php`.
+
+6. Preparación del equipo (PC limpio) — Requisitos previos
+---------------------------------------------------------
+A. Instalación de programas (opciones)
+  Opción 1 — Chocolatey (recomendado para automatizar en Windows PowerShell):
+  1) Abrir PowerShell como Administrador.
+  2) Instalar Chocolatey (si no está instalado):
+
+    # PowerShell (ejecutar como Administrador)
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor  3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+  3) Instalar paquetes esenciales (PHP, Composer, MySQL, Git):
+
+    choco install -y php composer git mysql
+
+  Opción 2 — XAMPP (instalador todo-en-uno, recomendado para desarrolladores que prefieren GUI):
+  - Descargar e instalar XAMPP desde https://www.apachefriends.org/ (incluye Apache, PHP, MySQL).
+
+  Opción 3 — Instalación manual:
+  - Instalar PHP desde https://www.php.net/downloads.php
+  - Instalar Composer desde https://getcomposer.org/
+  - Instalar MySQL o MariaDB desde sus canales oficiales.
+
+B. Verificar instalaciones (PowerShell)
+
+    php -v
+    composer -V
+    mysql --version
+    git --version
+
+C. Extensiones PHP
+- Asegurarse que en el php.ini están habilitadas: extension=pdo_mysql, extension=mbstring, extension=openssl, extension=curl, extension=fileinfo, extension=json. Reiniciar el servidor web después de cambios.
+
+7. Instalación paso a paso (Windows, PowerShell)
+------------------------------------------------
+Asumimos que tiene permisos de administrador durante la instalación inicial.
+
+1) Clonar o colocar el proyecto en el disco
+- Si usa Git:
+
+    git clone <REPO_URL> proyecto-PHP
+    cd proyecto-PHP
+
+- Si ya tiene la carpeta, abrir PowerShell en la carpeta del proyecto.
+
+2) Instalar dependencias con Composer
+- Desde la raíz del proyecto ejecutar:
+
+    composer install --no-interaction --prefer-dist
+
+- Si prefiere usar el composer local incluido en el repo (si existe `composer.phar`):
+
+    php composer.phar install
+
+3) Configurar variables de entorno (.env)
+- Copiar el archivo de ejemplo y editar parámetros:
+
+    copy .env.example .env
+
+- Editar `.env` con un editor de texto (Notepad, VSCode) y ajustar las entradas principales:
+  - DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
+  - JWT_SECRET (clave larga, segura)
+  - APP_ENV=development  (luego cambiar a production en entornos en vivo)
+  - CORS_ALLOWED_ORIGINS (orígenes permitidos para frontend)
+
+Ejemplo mínimo en `.env`:
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_NAME=admisiones_udc
+  DB_USER=root
+  DB_PASS=
+  JWT_SECRET=YourStrongRandomSecretHere
+  APP_ENV=development
+  CORS_ALLOWED_ORIGINS=http://localhost:3000
+
+4) Crear la base de datos
+- Con MySQL/MariaDB crear la base de datos indicada en `DB_NAME`:
+
+    # PowerShell (ejecutar en cliente mysql) - ejemplo
+    mysql -u root -p
+    CREATE DATABASE admisiones_udc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    EXIT;
+
+5) Correr migraciones / crear tablas
+- El proyecto incluye scripts de migración (ej. `migrations/001_create_tables.php`) y utilidades para crear tablas auxiliares como blacklist.
+- En orden, ejecutar (desde la raíz del proyecto):
+
+    php migrations/001_create_tables.php
+    php create-token-blacklist.php
+
+- Alternativa: usar `install.bat` (Windows) si desea un paso automatizado:
+
+    .\install.bat
+
+6) Crear usuario de prueba (opcional pero útil)
+- Para crear un usuario administrador de pruebas:
+
+    php create_test_user.php
+
+7) Ajustes de configuración web y CORS
+- Si usa Apache (XAMPP), configurar el DocumentRoot al directorio del proyecto o configurar un VirtualHost.
+- Si usa el servidor embebido de PHP para desarrollo:
+
+    php -S localhost:8000
+
+  Esto sirve para pruebas locales; en producción usar Apache/Nginx con PHP-FPM.
+
+8) Probar endpoints básicos
+- Usar curl o Postman para probar:
+  - POST http://localhost:8000/api/auth/login
+  - POST http://localhost:8000/api/users/register
+  - GET  http://localhost:8000/api/users/profile (con Authorization: Bearer <token>)
+
+9) Ejecutar pruebas unitarias (opcional)
+- Si desea ejecutar los tests incluidos (requiere phpunit instalado por Composer):
+
+    vendor\bin\phpunit --version    # o vendor\phpunit\phpunit\phpunit.bat en Windows
+    vendor\bin\phpunit --colors=always
+
+10) Logs, permisos y mantenimiento
+- Los logs se escriben en `logs/` (revisar permisos para que el servidor web pueda escribir).
+- Asegúrese de que `logs/` y `storage/` (si existe) tengan permisos de escritura por el usuario del servidor web.
+
+8. Configuración de producción (resumen)
+----------------------------------------
+- Cambiar `APP_ENV=production` en `.env`.
+- Usar un JWT_SECRET seguro y no comitearlo en el repositorio.
+- Utilizar HTTPS (certificado TLS) y configurar cabeceras de seguridad.
+- Ejecutar PHP-FPM detrás de Nginx o con Apache+mod_php (según preferencia).
+- Configurar backup periódico de la base de datos y rotación de logs.
+- Limitar accesos administrativos mediante firewall / IP whitelisting si aplica.
+
+9. Tareas de verificación post-instalación
+------------------------------------------
+- Verificar que composer instaló dependencias: `composer show`.
+- Verificar conexión a BD ejecutando `php simple_db_test.php`.
+- Verificar creación de tablas con `php migrations/001_create_tables.php` y revisar tablas en MySQL.
+- Verificar que `create-token-blacklist.php` creó la tabla `token_blacklist`.
+- Probar endpoints con Postman y revisar cabeceras CORS.
+- Revisar `logs/exceptions.log` y el archivo `logs/auth_debug.log` en caso de errores de autenticación.
+
+10. Problemas comunes y soluciones rápidas
+-----------------------------------------
+- Error: "PDOException: could not find driver" -> instalar y habilitar `pdo_mysql` en `php.ini`.
+- Error de permisos en `logs/` -> dar permisos de escritura al usuario del servidor.
+- Token JWT inválido/expirado -> comprobar `JWT_SECRET` y la hora del servidor (NTP).
+- Composer falla por tiempo de espera -> aumentar `memory_limit` o ejecutar `composer install --no-scripts` y depurar.
+
+11. Contacto y mantenimiento
+----------------------------
+- Mantenga una copia segura del archivo `.env` y del `JWT_SECRET` fuera del repositorio.
+- Antes de actualizar dependencias, probar en un entorno de staging.
+- Para auditorías y revisiones de seguridad, revisar dependencias de Composer y aplicar parches.
+
+Fin del documento.
+
+

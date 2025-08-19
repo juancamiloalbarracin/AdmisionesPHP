@@ -1,0 +1,103 @@
+POSTMAN - PRUEBAS RÁPIDAS PARA LA API
+
+Resumen
+- Instrucciones concisas en español para probar los endpoints reales del proyecto desde Postman.
+- Configure una Environment con variables: {{base_url}}, {{token}}, {{user_id}}.
+
+Variables de entorno sugeridas
+- base_url = http://localhost:8000
+- token = (se llenará después del login)
+- user_id = 1 (opcional para shortcuts de desarrollo)
+
+Encabezados comunes
+- Content-Type: application/json
+- Authorization: Bearer {{token}}   (usar sólo después de login)
+- En ambiente de desarrollo puede usarse: X-User-Id: 1  (salta autenticación cuando esté habilitado)
+
+Endpoints válidos (imprescindible)
+
+1) Login (obtener JWT)
+- Método: POST
+- URL: {{base_url}}/api/auth/login
+- Headers: Content-Type: application/json
+- Body (raw, JSON):
+  {
+    "email": "admin@example.com",
+    "password": "secret"
+  }
+- Test script (Postman) para guardar token automáticamente:
+  // Guarda el token retornado en la variable de entorno
+  if (pm.response.code === 200) {
+    const json = pm.response.json();
+    if (json.token) pm.environment.set("token", json.token);
+  }
+
+2) Registro de usuario
+- Método: POST
+- URL: {{base_url}}/api/users/register
+- Headers: Content-Type: application/json
+- Body (raw, JSON):
+  {
+    "email": "usuario@example.com",
+    "password": "Password123",
+    "nombres": "Nombre",
+    "apellidos": "Apellido",
+    "tipoDocumento": "CC",
+    "numeroDocumento": "12345678"
+  }
+- Respuesta esperada: objeto `user` y `token` para login automático.
+
+3) Obtener perfil del usuario autenticado
+- Método: GET
+- URL: {{base_url}}/api/users/profile
+- Headers:
+  - Authorization: Bearer {{token}}
+  - o (en desarrollo) X-User-Id: 1
+- Respuesta esperada: objeto `user` con datos del perfil.
+
+4) Actualizar perfil
+- Método: PUT
+- URL: {{base_url}}/api/users/profile
+- Headers: Authorization: Bearer {{token}} (o X-User-Id en dev)
+- Body (raw, JSON): incluir únicamente los campos a actualizar. Ejemplo:
+  {
+    "nombres": "Nombre Nuevo",
+    "apellidos": "Apellido Nuevo",
+    "tipoDocumento": "CC",
+    "numeroDocumento": "87654321"
+  }
+
+5) Cambiar contraseña
+- Método: POST
+- URL: {{base_url}}/api/users/change-password
+- Headers: Authorization: Bearer {{token}} (o X-User-Id en dev)
+- Body (raw, JSON):
+  {
+    "currentPassword": "vieja",
+    "newPassword": "nueva",
+    "confirmPassword": "nueva"
+  }
+
+Rutas NO disponibles
+- GET {{base_url}}/api/users  -> NO existe (devuelve ENDPOINT_NOT_FOUND)
+- GET {{base_url}}/api/users/:id -> NO existe
+- Rutas genéricas /api/resource/* -> NO implementadas aquí
+
+Si necesitas una ruta para listar usuarios o obtener un usuario por id, puedo implementarla (recomendado: sólo para roles admin o con protección X-User-Id en dev). Dime si la quieres y la agrego.
+
+Sugerencias para Postman
+1. Crear una Environment llamada "Proyecto-PHP" con las variables `base_url` y `token`.
+2. Crear una Collection "Proyecto API" y añadir las requests de ejemplo (Login, Register, Profile, Update, Change-password).
+3. En la request de Login añadir el test script provisto para autoguardar el token.
+4. En las requests protegidas usar la variable {{token}} en el header Authorization.
+5. Para pruebas rápidas en local usar el header `X-User-Id: 1` (sólo en entorno de desarrollo).
+
+Comprobaciones rápidas antes de probar
+- Asegúrate de que el servidor esté corriendo en http://localhost:8000 (API en `api/`).
+- Ejecuta primero el Login para obtener `token` o usa `X-User-Id` si prefieres evitar autenticación.
+
+Notas
+- Ajuste las rutas si su `base_url` difiere (por ejemplo si usa un virtualhost o puerto distinto).
+- Si quieres, puedo exportar una Collection Postman (.json) lista para importar con estas requests.
+
+Fin del archivo.

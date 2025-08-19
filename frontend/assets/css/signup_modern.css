@@ -1,0 +1,1355 @@
+/**
+ * ===================================================================
+ * UNIMINUTO SIGNUP MODERN - DISEÑO MODERNO MULTI-PASO
+ * ===================================================================
+ * Archivo: signup_modern.css
+ * Descripción: Estilos modernos para formulario de registro
+ * Fecha: 2025
+ */
+
+/* ===================================================================
+   VARIABLES CSS Y FUNDAMENTOS
+   =================================================================== */
+:root {
+    /* Colores principales */
+    --primary: #FF8C00;
+    --secondary: #FFB347;
+    --accent: #FFA500;
+    --dark: #1a1a1a;
+    --light: #ffffff;
+    
+    /* Gradientes */
+    --gradient-primary: linear-gradient(135deg, #FF8C00 0%, #FFB347 100%);
+    --gradient-secondary: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+    --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    
+    /* Efectos de vidrio */
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-backdrop: blur(20px);
+    
+    /* Sombras */
+    --shadow-light: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-medium: 0 15px 35px rgba(31, 38, 135, 0.1);
+    --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.1);
+    
+    /* Tipografía */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Espaciado */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    /* Transiciones */
+    --transition-fast: all 0.2s ease;
+    --transition-medium: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+}
+
+/* ===================================================================
+   RESET Y CONFIGURACIÓN BASE
+   =================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.6;
+    color: var(--dark);
+    background: var(--gradient-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Fondo animado */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 179, 71, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 165, 0, 0.2) 0%, transparent 50%);
+    z-index: -1;
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { 
+        transform: translateX(0px) translateY(0px); 
+        opacity: 1;
+    }
+    33% { 
+        transform: translateX(30px) translateY(-30px); 
+        opacity: 0.8;
+    }
+    66% { 
+        transform: translateX(-20px) translateY(20px); 
+        opacity: 0.9;
+    }
+}
+
+/* ===================================================================
+   LAYOUT PRINCIPAL
+   =================================================================== */
+.signup-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    position: relative;
+}
+
+.signup-wrapper {
+    display: flex;
+    max-width: 1400px;
+    width: 100%;
+    min-height: 700px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    position: relative;
+}
+
+.signup-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    z-index: 1;
+}
+
+/* ===================================================================
+   PANEL PRINCIPAL DE REGISTRO
+   =================================================================== */
+.signup-main {
+    flex: 1;
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* ===================================================================
+   HEADER Y LOGO
+   =================================================================== */
+.signup-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.signup-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(0);
+    transition: var(--transition-medium);
+}
+
+.signup-logo:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: var(--shadow-heavy);
+}
+
+.signup-logo i {
+    font-size: 2rem;
+    color: var(--light);
+}
+
+.signup-title {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-xs);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.signup-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: var(--spacing-lg);
+    font-weight: var(--font-weight-normal);
+}
+
+/* ===================================================================
+   BARRA DE PROGRESO
+   =================================================================== */
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+    padding: 0 20px;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    transition: var(--transition-medium);
+}
+
+.progress-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e9ecef;
+    border: 3px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-xs);
+    transition: var(--transition-medium);
+    position: relative;
+}
+
+.progress-circle i {
+    font-size: 1.2rem;
+    color: #adb5bd;
+    transition: var(--transition-fast);
+}
+
+.progress-label {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-medium);
+    color: #6c757d;
+    text-align: center;
+    max-width: 100px;
+    transition: var(--transition-fast);
+}
+
+.progress-line {
+    flex: 1;
+    height: 3px;
+    background: #e9ecef;
+    margin: 0 10px;
+    position: relative;
+    border-radius: 2px;
+    transition: var(--transition-medium);
+}
+
+.progress-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+/* Estados activo y completado */
+.progress-step.active .progress-circle {
+    background: var(--gradient-primary);
+    border-color: var(--primary);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.2);
+}
+
+.progress-step.active .progress-circle i {
+    color: white;
+}
+
+.progress-step.active .progress-label {
+    color: var(--primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.progress-step.completed .progress-circle {
+    background: var(--gradient-primary);
+    border-color: var(--primary);
+}
+
+.progress-step.completed .progress-circle i {
+    color: white;
+}
+
+.progress-step.completed .progress-label {
+    color: var(--primary);
+}
+
+.progress-step.completed + .progress-line::after {
+    width: 100%;
+}
+
+/* Animación de pulso para paso activo */
+.progress-step.active .progress-circle::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    background: rgba(255, 140, 0, 0.3);
+    animation: pulse 2s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.05);
+        opacity: 0;
+    }
+}
+
+/* ===================================================================
+   FORMULARIO MULTI-PASO
+   =================================================================== */
+.signup-form {
+    position: relative;
+    overflow: hidden;
+}
+
+.form-step {
+    display: none;
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-step.slide-out-left {
+    animation: slideOutLeft 0.3s ease forwards;
+}
+
+.form-step.slide-out-right {
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+}
+
+/* ===================================================================
+   HEADERS DE PASOS
+   =================================================================== */
+.step-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid #f8f9fa;
+    position: relative;
+}
+
+.step-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 1px;
+}
+
+.step-header h3 {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.step-header p {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+/* ===================================================================
+   GRUPOS DE FORMULARIO
+   =================================================================== */
+.form-group {
+    margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    color: var(--dark);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.95rem;
+}
+
+.form-label i {
+    color: var(--primary);
+    margin-right: var(--spacing-xs);
+}
+
+/* ===================================================================
+   INPUTS MODERNOS
+   =================================================================== */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    padding-right: 3rem;
+    border: 2px solid #e9ecef;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    transition: var(--transition-fast);
+    background: white;
+    color: var(--dark);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-control:valid {
+    border-color: #28a745;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.input-group-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    pointer-events: none;
+    transition: var(--transition-fast);
+}
+
+.form-control:focus + .input-group-icon {
+    color: var(--primary);
+}
+
+/* ===================================================================
+   SELECT PERSONALIZADO
+   =================================================================== */
+.select-group {
+    position: relative;
+}
+
+.select-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.25rem;
+    border: 2px solid #e9ecef;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    background: white;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.select-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.1);
+}
+
+.select-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    pointer-events: none;
+    transition: var(--transition-fast);
+}
+
+.select-group:focus-within .select-icon {
+    color: var(--primary);
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* ===================================================================
+   CAMPOS DE CONTRASEÑA
+   =================================================================== */
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #adb5bd;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+.password-toggle:hover {
+    color: var(--primary);
+    background: rgba(255, 140, 0, 0.1);
+}
+
+/* Indicador de fortaleza de contraseña */
+.password-strength {
+    margin-top: var(--spacing-xs);
+}
+
+.strength-bar {
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-fill.weak { 
+    width: 25%; 
+    background: #dc3545; 
+}
+
+.strength-fill.fair { 
+    width: 50%; 
+    background: #ffc107; 
+}
+
+.strength-fill.good { 
+    width: 75%; 
+    background: #fd7e14; 
+}
+
+.strength-fill.strong { 
+    width: 100%; 
+    background: #28a745; 
+}
+
+.strength-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: var(--font-weight-medium);
+}
+
+/* ===================================================================
+   REQUISITOS DE CONTRASEÑA
+   =================================================================== */
+.password-requirements {
+    background: #f8f9fa;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--primary);
+}
+
+.password-requirements h6 {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.requirements-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.requirements-list li {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+    color: #6c757d;
+    transition: var(--transition-fast);
+}
+
+.requirements-list li i {
+    margin-right: var(--spacing-xs);
+    width: 16px;
+    text-align: center;
+    color: #dc3545;
+    transition: var(--transition-fast);
+}
+
+.requirements-list li.valid {
+    color: #28a745;
+}
+
+.requirements-list li.valid i {
+    color: #28a745;
+}
+
+.requirements-list li.valid i::before {
+    content: '\f00c';
+}
+
+/* ===================================================================
+   RESUMEN DE CONFIRMACIÓN
+   =================================================================== */
+.confirmation-summary {
+    background: #f8f9fa;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    border: 2px solid #e9ecef;
+}
+
+.summary-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.summary-section:last-child {
+    margin-bottom: 0;
+}
+
+.summary-section h5 {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--dark);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid #dee2e6;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: var(--font-weight-medium);
+    color: #495057;
+    flex: 1;
+}
+
+.summary-value {
+    font-weight: var(--font-weight-normal);
+    color: var(--dark);
+    text-align: right;
+    flex: 1;
+}
+
+/* ===================================================================
+   CHECKBOX PERSONALIZADO
+   =================================================================== */
+.form-check-custom {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    margin-right: var(--spacing-sm);
+    margin-top: 2px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.form-check-label {
+    font-size: 0.9rem;
+    color: #495057;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.terms-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition-fast);
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+    color: var(--accent);
+}
+
+/* ===================================================================
+   ACCIONES DE PASOS (BOTONES)
+   =================================================================== */
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 2px solid #f8f9fa;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-primary);
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-decoration: none;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.btn-outline-secondary {
+    background: transparent;
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn:disabled:hover {
+    transform: none;
+}
+
+/* ===================================================================
+   LINK DE LOGIN
+   =================================================================== */
+.login-link {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 2px solid #f8f9fa;
+}
+
+.login-link p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.link-primary {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition-fast);
+}
+
+.link-primary:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ===================================================================
+   SIDEBAR DE INFORMACIÓN
+   =================================================================== */
+.signup-sidebar {
+    flex: 0 0 400px;
+    background: var(--gradient-dark);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.signup-sidebar::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 179, 71, 0.1) 0%, transparent 50%);
+    animation: rotateBg 20s linear infinite;
+}
+
+@keyframes rotateBg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.sidebar-content {
+    position: relative;
+    z-index: 2;
+    padding: var(--spacing-xl);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.sidebar-header h4 {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, #fff 0%, #FFB347 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sidebar-header p {
+    font-size: 1rem;
+    opacity: 0.9;
+    color: #e9ecef;
+}
+
+/* ===================================================================
+   LISTA DE CARACTERÍSTICAS
+   =================================================================== */
+.features-list {
+    margin-bottom: var(--spacing-xl);
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-medium);
+}
+
+.feature-item:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.feature-icon {
+    flex: 0 0 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+    box-shadow: var(--shadow-medium);
+}
+
+.feature-icon i {
+    font-size: 1.25rem;
+    color: white;
+}
+
+.feature-content h6 {
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.25rem;
+    color: white;
+}
+
+.feature-content p {
+    font-size: 0.85rem;
+    color: #e9ecef;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ===================================================================
+   PIE DEL SIDEBAR
+   =================================================================== */
+.sidebar-footer {
+    text-align: center;
+    margin-top: auto;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-footer p {
+    font-size: 0.85rem;
+    color: #e9ecef;
+    margin: 0;
+    opacity: 0.8;
+}
+
+/* ===================================================================
+   ESTADOS DE CARGA
+   =================================================================== */
+.loading {
+    pointer-events: none;
+    opacity: 0.7;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===================================================================
+   ALERTAS Y NOTIFICACIONES
+   =================================================================== */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    border: none;
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    animation: slideInDown 0.3s ease;
+}
+
+.alert i {
+    margin-right: var(--spacing-sm);
+    font-size: 1.1rem;
+}
+
+.alert-success {
+    background: rgba(40, 167, 69, 0.1);
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    background: rgba(220, 53, 69, 0.1);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.1);
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================================
+   RESPONSIVE DESIGN
+   =================================================================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .signup-wrapper {
+        flex-direction: column;
+        max-width: 600px;
+    }
+    
+    .signup-sidebar {
+        flex: none;
+        order: -1;
+        min-height: 300px;
+    }
+    
+    .sidebar-content {
+        padding: var(--spacing-lg);
+        text-align: center;
+    }
+    
+    .features-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        justify-content: center;
+    }
+    
+    .feature-item {
+        flex: 1;
+        min-width: 200px;
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .signup-container {
+        padding: var(--spacing-xs);
+    }
+    
+    .signup-main {
+        padding: var(--spacing-lg);
+    }
+    
+    .signup-title {
+        font-size: 2rem;
+    }
+    
+    .progress-container {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .progress-line {
+        display: none;
+    }
+    
+    .progress-step {
+        flex-direction: row;
+        width: 100%;
+        justify-content: flex-start;
+        text-align: left;
+        padding: var(--spacing-sm);
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: var(--radius-md);
+    }
+    
+    .progress-circle {
+        margin-bottom: 0;
+        margin-right: var(--spacing-sm);
+    }
+    
+    .progress-label {
+        max-width: none;
+        text-align: left;
+    }
+    
+    .step-actions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .btn {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .features-list {
+        flex-direction: column;
+    }
+    
+    .feature-item {
+        min-width: auto;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .signup-main {
+        padding: var(--spacing-md);
+    }
+    
+    .signup-title {
+        font-size: 1.75rem;
+    }
+    
+    .form-control {
+        padding: 0.875rem 1rem;
+        padding-right: 2.5rem;
+    }
+    
+    .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
+    
+    .feature-item {
+        padding: var(--spacing-sm);
+    }
+    
+    .feature-icon {
+        flex: 0 0 40px;
+        height: 40px;
+        margin-right: var(--spacing-sm);
+    }
+    
+    .feature-icon i {
+        font-size: 1rem;
+    }
+}
+
+/* ===================================================================
+   ANIMACIONES DE ENTRADA
+   =================================================================== */
+.signup-wrapper {
+    animation: fadeInScale 0.6s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.feature-item {
+    animation: slideInLeft 0.5s ease forwards;
+    animation-delay: calc(var(--animation-order, 0) * 0.1s);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===================================================================
+   UTILIDADES Y HELPERS
+   =================================================================== */
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-flex { display: flex !important; }
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: var(--spacing-xs) !important; }
+.mb-2 { margin-bottom: var(--spacing-sm) !important; }
+.mb-3 { margin-bottom: var(--spacing-md) !important; }
+.mb-4 { margin-bottom: var(--spacing-lg) !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: var(--spacing-xs) !important; }
+.mt-2 { margin-top: var(--spacing-sm) !important; }
+.mt-3 { margin-top: var(--spacing-md) !important; }
+.mt-4 { margin-top: var(--spacing-lg) !important; }
+
+/* ===================================================================
+   ACCESIBILIDAD
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus visible para navegación por teclado */
+.form-control:focus-visible,
+.btn:focus-visible,
+.form-check-input:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+        --shadow-light: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
+    
+    .form-control {
+        border-width: 3px;
+    }
+    
+    .btn {
+        border-width: 3px;
+    }
+}
+
+/* ===================================================================
+   PRINT STYLES
+   =================================================================== */
+@media print {
+    body {
+        background: white !important;
+    }
+    
+    .signup-sidebar {
+        display: none !important;
+    }
+    
+    .signup-wrapper {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+    
+    .btn {
+        border: 1px solid #000 !important;
+        background: white !important;
+        color: black !important;
+    }
+}

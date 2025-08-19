@@ -1,0 +1,6 @@
+2025-08-18T00:53:01-05:00 UNCAUGHT_EXCEPTION: UDC\SistemaAdmisiones\Models\InfoAcademica::save(): Argument #1 ($userId) must be of type int, null given, called in D:\UDC 2025 -1\CHAMBA\JAVA NUEVO\Proyecto-PruebasPostman\proyecto-PHP\src\controllers\InfoAcademicaController.php on line 133 in D:\UDC 2025 -1\CHAMBA\JAVA NUEVO\Proyecto-PruebasPostman\proyecto-PHP\src\models\InfoAcademica.php:244
+#0 D:\UDC 2025 -1\CHAMBA\JAVA NUEVO\Proyecto-PruebasPostman\proyecto-PHP\src\controllers\InfoAcademicaController.php(133): UDC\SistemaAdmisiones\Models\InfoAcademica->save(NULL)
+#1 D:\UDC 2025 -1\CHAMBA\JAVA NUEVO\Proyecto-PruebasPostman\proyecto-PHP\api\info-academica.php(113): UDC\SistemaAdmisiones\Controllers\InfoAcademicaController->save(Array, Array)
+#2 D:\UDC 2025 -1\CHAMBA\JAVA NUEVO\Proyecto-PruebasPostman\proyecto-PHP\api\index.php(60): require_once('D:\\UDC 2025 -1\\...')
+#3 {main}
+---

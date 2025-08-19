@@ -1,0 +1,24 @@
+[2025-08-17 02:47:07] AUTH JSON decode error: Syntax error
+CT=application/json len=2
+Raw: {\
+
+[2025-08-17 02:49:23] AUTH JSON decode error: Syntax error
+CT=application/json len=2
+Raw: {\
+
+[2025-08-17 02:53:03] AUTH JSON decode error: Syntax error
+CT=application/x-www-form-urlencoded len=39
+Raw: email=user1@gmail.com&password=user1234
+
+[2025-08-17 02:53:23] AUTH JSON decode error: Syntax error
+CT=application/x-www-form-urlencoded len=42
+Raw: email=user1@gmail.com&password=123123ADad.
+
+[2025-08-17 02:56:23] AUTH JSON decode error: Syntax error
+CT=application/json len=2
+Raw: {\
+
+[2025-08-18 12:01:08] AUTH JSON decode error: Syntax error
+CT= len=0
+Raw: 
+
